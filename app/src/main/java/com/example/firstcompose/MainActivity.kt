@@ -2,6 +2,7 @@ package com.example.firstcompose
 
 import com.example.firstcompose.R
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -9,12 +10,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.Alignment
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -55,13 +58,15 @@ class MainActivity : ComponentActivity() {
 @Composable
  private fun previewFunction() {
     var showDescription by remember { mutableStateOf(false) }
+    var inputName by remember { mutableStateOf("") }
+    var isNameSubmitted by remember { mutableStateOf(false) }
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(id = R.drawable.KUMMU),
@@ -75,15 +80,40 @@ class MainActivity : ComponentActivity() {
                 Text(text = "press me to know about image")
             }
 
-            if(showDescription){
-                Text(text = "kummu is a girl in her 20s and she has a beautiful mom , hardworking father and the best brother . ",
+            if (showDescription) {
+                Text(
+                    text = "kummu is a girl in her 20s and she has a beautiful mom , hardworking father and the best brother . ",
                     fontFamily = FontFamily.SansSerif,
-                    textAlign = TextAlign.Center,
-                     )
+                    textAlign = TextAlign.Center
+                )
             }
+
+            TextField(
+                value = inputName,
+                onValueChange = { inputName = it },
+                label = { Text(text = "what is your sweet name ?") },
+                modifier = Modifier
+                    .padding(8.dp)
+
+            )
+            Button(onClick = {
+                if (inputName.isNotEmpty()) {
+                    isNameSubmitted = true
+                }
+            }) {
+                Text(text = "Enter")
+            }
+
+            if (isNameSubmitted) {
+                Text(text = "hey $inputName,thank you for visiting my app \n" +
+                        "\nwanna contact us ? enter your message below")
+
+            }
+            Box(modifier = Modifier
+                .
+            )
+
         }
-
-
     }
 }
 
