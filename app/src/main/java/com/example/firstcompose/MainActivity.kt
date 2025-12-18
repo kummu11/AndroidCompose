@@ -41,6 +41,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.Dp
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+
 
 
 class MainActivity : ComponentActivity() {
@@ -66,18 +69,18 @@ class MainActivity : ComponentActivity() {
     var inputName by remember { mutableStateOf("") }
     var isNameSubmitted by remember { mutableStateOf(false) }
     var messageInput by remember { mutableStateOf("") }
-    var showDescription2 by remember { mutableStateOf(false) }
 
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+            .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = R.drawable.KUMMU),
+                painter = painterResource(id = R.drawable.kummu),
                 contentDescription = "kummu",
                 colorFilter = ColorFilter.lighting(
                     multiply = Color(1.2f, 1.2f, 1.2f), // Makes the image 20% brighter
@@ -127,13 +130,14 @@ class MainActivity : ComponentActivity() {
                     .height(200.dp),
                     maxLines = 100,
             )
-            Button(onClick = {showDescription2 = true}){
+            Button(onClick = {
+                if(messageInput.isNotEmpty()){
+                    messageInput = "Message sent! thank you for contacting"
+                }
+            }){
                 Text(text = "submit")
             }
-            if(showDescription2){
-                Text(text = "Message Sent")
-                Text(text = "thank you for contacting us")
-            }
+
         }
     }
 }
