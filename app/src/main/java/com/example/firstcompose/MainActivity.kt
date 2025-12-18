@@ -2,6 +2,7 @@ package com.example.firstcompose
 
 import com.example.firstcompose.R
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,9 +13,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.ui.Alignment
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -36,6 +40,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.unit.Dp
 
 
 class MainActivity : ComponentActivity() {
@@ -60,6 +65,9 @@ class MainActivity : ComponentActivity() {
     var showDescription by remember { mutableStateOf(false) }
     var inputName by remember { mutableStateOf("") }
     var isNameSubmitted by remember { mutableStateOf(false) }
+    var messageInput by remember { mutableStateOf("") }
+    var showDescription2 by remember { mutableStateOf(false) }
+
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -107,12 +115,25 @@ class MainActivity : ComponentActivity() {
             if (isNameSubmitted) {
                 Text(text = "hey $inputName,thank you for visiting my app \n" +
                         "\nwanna contact us ? enter your message below")
-
             }
-            Box(modifier = Modifier
-                .
+            OutlinedTextField(
+                value = messageInput,
+                onValueChange = { messageInput = it },
+                label = { Text(text = "enter your message...",
+                          color = Color.Gray )},
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .height(200.dp),
+                    maxLines = 100,
             )
-
+            Button(onClick = {showDescription2 = true}){
+                Text(text = "submit")
+            }
+            if(showDescription2){
+                Text(text = "Message Sent")
+                Text(text = "thank you for contacting us")
+            }
         }
     }
 }
